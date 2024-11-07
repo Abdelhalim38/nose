@@ -1,0 +1,24 @@
+# Video domains
+# ===============================================================
+
+#SnapTube
+
+snaptube.app
+sensors.snaptube.app
+snaptube.in
+api.snaptube.app
+config.ad.snaptube.app
+misc.api.snaptube.app.lan
+api.ad.snaptube.app
+callback.ad.snaptube.app
+misc.api.snaptube.app
+misc.api.snaptube.app
+api.snaptube.app
+snaptube-ngxv3-eksv3-nlb-114ba0914876b3b2.elb.us-east-1.amazonaws.com
+
+# Dailymotion
+
+centerblog.net
+dailymotion.com
+dmotion.s.llnwi.net
+fandeloup.f.a.pic.centerblog.net
