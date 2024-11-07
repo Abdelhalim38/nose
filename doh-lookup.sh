@@ -12,7 +12,7 @@
 #
 export LC_ALL=C
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
-input1="./doh-domains_overall.txt"
+input1="https://github.com/Abdelhalim38/hosts/blob/master/more"
 input2="input2.txt"
 input3="input3.txt"
 upstream="8.8.8.8"
