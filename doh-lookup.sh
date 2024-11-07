@@ -29,13 +29,6 @@ awk_tool="$(command -v awk)"
 : >"./domains.tmp"
 : >"./domains_abandoned.tmp"
 
-# sanity pre-checks
-#
-if [ ! -x "${dig_tool}" ] || [ ! -x "${awk_tool}" ] || [ ! -s "${input1}" ] || [ -z "${upstream}" ]; then
-	printf "%s\n" "ERR: general pre-check failed"
-	exit 1
-fi
-
 for domain in ${check_domains}; do
 	out="$("${dig_tool}" "${domain}" A "${domain}" AAAA +noall +answer +time=5 +tries=1 2>/dev/null)"
 	if [ -z "${out}" ]; then
