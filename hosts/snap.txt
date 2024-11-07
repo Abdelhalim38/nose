@@ -1,0 +1,37 @@
+# Snapchat domains
+# ===============================================================
+
+snapchat.com
+app.snapchat.com
+snapchat.appspot.com
+sc-analytics.appspot.com
+www.feelinsonice.com
+feelinsonice.l.google.com
+feelinsonice.appspot.com
+feelinsonice-hrd.appspot.com
+data.flurry.com
+appspot.l.google.com
+gcp.api.snapchat.com
+us-central1-gcp.api.snapchat.com
+app.snapchat.com
+aws.duplex.snapchat.com
+mvm.snapchat.com
+us-east4-gcp.api.snapchat.com
+aws.api.snapchat.com
+us-east1-aws.api.snapchat.com
+pro-accounts.snapchat.com
+app-analytics-v2.snapchat.com
+europe-west1-gcp.api.snapchat.com
+pro-stories.snapchat.com
+api.snapchat.com
+app-analytics-v2.snapchat.com
+app.snapchat.com
+aws-proxy-gcp.api.snapchat.com
+aws.api.snapchat.com
+aws.duplex.snapchat.com
+europe-west1-gcp.api.snapchat.com
+gcp.api.snapchat.com
+us-central1-gcp.api.snapchat.com
+us-east1-aws-acc.api.snapchat.com
+us-east1-aws.api.snapchat.com
+us-east4-gcp.api.snapchat.com
