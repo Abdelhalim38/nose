@@ -106,6 +106,53 @@ doh_end="$(date "+%s")"
 doh_duration="$(((doh_end - doh_start1) / 60))m $(((doh_end - doh_start1) % 60))s"
 printf "%s\n" "::: First run, duration: ${doh_duration}, processed domains: ${cnt}, error domains: ${error_cnt}"
 
+# domain processing (second run)
+#
+cnt="0"
+doh_start2="$(date "+%s")"
+while IFS= read -r domain; do
+	(
+		domain_ok="false"
+		out="$("${dig_tool}" "@${upstream}" "${domain}" A "${domain}" AAAA +noall +answer +time=5 +tries=1 2>/dev/null)"
+		if [ -n "${out}" ]; then
+			ips="$(printf "%s" "${out}" | "${awk_tool}" '/^.*[[:space:]]+IN[[:space:]]+A{1,4}[[:space:]]+/{printf "%s ",$NF}')"
+			if [ -n "${ips}" ]; then
+				for ip in ${ips}; do
+					if [ "${ip%%.*}" = "0" ] || [ -z "${ip%%::*}" ]; then
+						continue
+					else
+						if ipcalc-ng -cs "${ip}"; then
+							domain_ok="true"
+							if [ "${ip##*:}" = "${ip}" ]; then
+								printf "%-20s%s\n" "${ip}" "# ${domain}" >>"./ipv4.tmp"
+							else
+								printf "%-40s%s\n" "${ip}" "# ${domain}" >>"./ipv6.tmp"
+							fi
+						fi
+					fi
+				done
+			else
+				printf "%s\n" "$domain" >>"./${input3}"
+			fi
+		fi
+		if [ "${domain_ok}" = "false" ]; then
+			printf "%s\n" "${domain}" >>./domains_abandoned.tmp
+		else
+			printf "%s\n" "${domain}" >>./domains.tmp
+		fi
+	) &
+	hold1="$((cnt % 512))"
+	hold2="$((cnt % 2048))"
+	[ "${hold1}" = "0" ] && sleep 3
+	[ "${hold2}" = "0" ] && wait
+	cnt="$((cnt + 1))"
+done <"${input2}"
+wait
+error_cnt="$("${awk_tool}" 'END{printf "%d",NR}' "./${input3}" 2>/dev/null)"
+doh_end="$(date "+%s")"
+doh_duration="$(((doh_end - doh_start2) / 60))m $(((doh_end - doh_start2) % 60))s"
+printf "%s\n" "::: Second run, duration: ${doh_duration}, processed domains: ${cnt}, error domains: ${error_cnt}"
+
 # sanity re-check
 #
 if [ ! -s "./ipv4.tmp" ] || [ ! -s "./ipv6.tmp" ] || [ ! -s "./domains.tmp" ] || [ ! -f "./domains_abandoned.tmp" ]; then
