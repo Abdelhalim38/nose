@@ -12,7 +12,7 @@
 #
 export LC_ALL=C
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
-input1="https://raw.githubusercontent.com/Abdelhalim38/hosts/refs/heads/master/more.txt"
+input1="./hosts/more.txt"
 input2="input2.txt"
 input3="input3.txt"
 upstream="8.8.8.8"
