@@ -1,0 +1,10 @@
+api.fc.mob.com
+b-graph.facebook.co
+facebook-web-clients.appspot.com
+facebook.com
+fb.com
+fb.me
+fbcdn-profile-a.akamaihd.net
+fbcdn.com
+fbcdn.net
+fbsbx.com

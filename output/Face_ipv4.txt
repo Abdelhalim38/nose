@@ -1,0 +1,13 @@
+23.209.116.33       # fbcdn-profile-a.akamaihd.net
+23.209.116.34       # fbcdn-profile-a.akamaihd.net
+23.209.116.35       # fbcdn-profile-a.akamaihd.net
+23.209.116.40       # fbcdn-profile-a.akamaihd.net
+23.209.116.41       # fbcdn-profile-a.akamaihd.net
+23.209.116.42       # fbcdn-profile-a.akamaihd.net
+23.209.116.43       # fbcdn-profile-a.akamaihd.net
+23.209.116.48       # fbcdn-profile-a.akamaihd.net
+23.209.116.49       # fbcdn-profile-a.akamaihd.net
+31.13.66.4          # fbcdn.com
+31.13.66.35         # facebook.com
+142.250.217.148     # facebook-web-clients.appspot.com
+180.188.25.47       # api.fc.mob.com
