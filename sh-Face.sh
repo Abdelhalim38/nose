@@ -13,15 +13,15 @@
 export LC_ALL=C
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
 input1="./hosts/Face.txt"
-Face_input2="Face_input2.txt"
-Face_input3="Face_input3.txt"
+input2="Face_input2.txt"
+input3="Face_input3.txt"
 upstream="8.8.8.8"
 check_domains="google.com heise.de openwrt.org"
 cache_domains=""
 dig_tool="$(command -v dig)"
 awk_tool="$(command -v awk)"
-: >"./${Face_input2}"
-: >"./${Face_input3}"
+: >"./${input2}"
+: >"./${input3}"
 : >"./Face_ipv4.tmp"
 : >"./Face_ipv6.tmp"
 : >"./Face_ipv4_cache.tmp"
@@ -78,7 +78,7 @@ while IFS= read -r domain; do
 					fi
 				done
 			else
-				printf "%s\n" "$domain" >>"./${Face_input2}"
+				printf "%s\n" "$domain" >>"./${input2}"
 			fi
 		fi
 		if [ "${domain_ok}" = "false" ]; then
@@ -94,7 +94,7 @@ while IFS= read -r domain; do
 	cnt="$((cnt + 1))"
 done <"${input1}"
 wait
-error_cnt="$("${awk_tool}" 'END{printf "%d",NR}' "./${Face_input2}" 2>/dev/null)"
+error_cnt="$("${awk_tool}" 'END{printf "%d",NR}' "./${input2}" 2>/dev/null)"
 doh_end="$(date "+%s")"
 doh_duration="$(((doh_end - doh_start1) / 60))m $(((doh_end - doh_start1) % 60))s"
 printf "%s\n" "::: First run, duration: ${doh_duration}, processed domains: ${cnt}, error domains: ${error_cnt}"
@@ -125,7 +125,7 @@ while IFS= read -r domain; do
 					fi
 				done
 			else
-				printf "%s\n" "$domain" >>"./${Face_input3}"
+				printf "%s\n" "$domain" >>"./${input3}"
 			fi
 		fi
 		if [ "${domain_ok}" = "false" ]; then
@@ -139,9 +139,9 @@ while IFS= read -r domain; do
 	[ "${hold1}" = "0" ] && sleep 3
 	[ "${hold2}" = "0" ] && wait
 	cnt="$((cnt + 1))"
-done <"${Face_input2}"
+done <"${input2}"
 wait
-error_cnt="$("${awk_tool}" 'END{printf "%d",NR}' "./${Face_input3}" 2>/dev/null)"
+error_cnt="$("${awk_tool}" 'END{printf "%d",NR}' "./${input3}" 2>/dev/null)"
 doh_end="$(date "+%s")"
 doh_duration="$(((doh_end - doh_start2) / 60))m $(((doh_end - doh_start2) % 60))s"
 printf "%s\n" "::: Second run, duration: ${doh_duration}, processed domains: ${cnt}, error domains: ${error_cnt}"
