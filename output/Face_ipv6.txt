@@ -1,8 +1,9 @@
-2600:1409:8800::17d1:7422               # fbcdn-profile-a.akamaihd.net
-2600:1409:8800::17d1:7423               # fbcdn-profile-a.akamaihd.net
-2600:1409:8800::17d1:7428               # fbcdn-profile-a.akamaihd.net
-2600:1409:8800::17d1:7429               # fbcdn-profile-a.akamaihd.net
-2600:1409:8800::17d1:742a               # fbcdn-profile-a.akamaihd.net
-2607:f8b0:4007:80f::2014                # facebook-web-clients.appspot.com
+2600:1409:8800::17d1:7413               # fbcdn-profile-a.akamaihd.net
+2600:1409:8800::17d1:7418               # fbcdn-profile-a.akamaihd.net
+2600:1409:8800::17d1:741a               # fbcdn-profile-a.akamaihd.net
+2600:1409:8800::17d1:741b               # fbcdn-profile-a.akamaihd.net
+2600:1409:8800::17d1:7420               # fbcdn-profile-a.akamaihd.net
+2607:f8b0:4005:812::2014                # facebook-web-clients.appspot.com
 2a03:2880:f003:c07:face:b00c:0:2        # fbcdn.com
+2a03:2880:f103:181:face:b00c:0:25de     # fbsbx.com
 2a03:2880:f103:83:face:b00c:0:25de      # facebook.com
