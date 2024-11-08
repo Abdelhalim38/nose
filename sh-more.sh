@@ -12,9 +12,9 @@
 #
 export LC_ALL=C
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
-input1="./hosts/insta.txt"
-input2="insta_input2.txt"
-input3="insta_input3.txt"
+input1="./hosts/more.txt"
+input2="more_input2.txt"
+input3="more_input3.txt"
 upstream="8.8.8.8"
 check_domains="google.com heise.de openwrt.org"
 cache_domains=""
@@ -22,12 +22,12 @@ dig_tool="$(command -v dig)"
 awk_tool="$(command -v awk)"
 : >"./${input2}"
 : >"./${input3}"
-: >"./insta_ipv4.tmp"
-: >"./insta_ipv6.tmp"
-: >"./insta_ipv4_cache.tmp"
-: >"./insta_ipv6_cache.tmp"
-: >"./insta_domains.tmp"
-: >"./insta_domains_abandoned.tmp"
+: >"./more_ipv4.tmp"
+: >"./more_ipv6.tmp"
+: >"./more_ipv4_cache.tmp"
+: >"./more_ipv6_cache.tmp"
+: >"./more_domains.tmp"
+: >"./more_domains_abandoned.tmp"
 
 for domain in ${check_domains}; do
 	out="$("${dig_tool}" "${domain}" A "${domain}" AAAA +noall +answer +time=5 +tries=1 2>/dev/null)"
@@ -46,8 +46,8 @@ done
 # pre-fill cache domains
 #
 for domain in ${cache_domains}; do
-	"${awk_tool}" -v d="${domain}" '$0~d{print $0}' "./output/insta_ipv4.txt" >>"./insta_ipv4_cache.tmp"
-	"${awk_tool}" -v d="${domain}" '$0~d{print $0}' "./output/insta_ipv6.txt" >>"./insta_ipv6_cache.tmp"
+	"${awk_tool}" -v d="${domain}" '$0~d{print $0}' "./output/more_ipv4.txt" >>"./more_ipv4_cache.tmp"
+	"${awk_tool}" -v d="${domain}" '$0~d{print $0}' "./output/more_ipv6.txt" >>"./more_ipv6_cache.tmp"
 done
 
 # domain processing (first run)
@@ -70,9 +70,9 @@ while IFS= read -r domain; do
 						if ipcalc-ng -cs "${ip}"; then
 							domain_ok="true"
 							if [ "${ip##*:}" = "${ip}" ]; then
-								printf "%-20s%s\n" "${ip}" "# ${domain}" >>"./insta_ipv4.tmp"
+								printf "%-20s%s\n" "${ip}" "# ${domain}" >>"./more_ipv4.tmp"
 							else
-								printf "%-40s%s\n" "${ip}" "# ${domain}" >>"./insta_ipv6.tmp"
+								printf "%-40s%s\n" "${ip}" "# ${domain}" >>"./more_ipv6.tmp"
 							fi
 						fi
 					fi
@@ -82,9 +82,9 @@ while IFS= read -r domain; do
 			fi
 		fi
 		if [ "${domain_ok}" = "false" ]; then
-			printf "%s\n" "${domain}" >>./insta_domains_abandoned.tmp
+			printf "%s\n" "${domain}" >>./more_domains_abandoned.tmp
 		else
-			printf "%s\n" "${domain}" >>./insta_domains.tmp
+			printf "%s\n" "${domain}" >>./more_domains.tmp
 		fi
 	) &
 	hold1="$((cnt % 512))"
@@ -117,9 +117,9 @@ while IFS= read -r domain; do
 						if ipcalc-ng -cs "${ip}"; then
 							domain_ok="true"
 							if [ "${ip##*:}" = "${ip}" ]; then
-								printf "%-20s%s\n" "${ip}" "# ${domain}" >>"./insta_ipv4.tmp"
+								printf "%-20s%s\n" "${ip}" "# ${domain}" >>"./more_ipv4.tmp"
 							else
-								printf "%-40s%s\n" "${ip}" "# ${domain}" >>"./insta_ipv6.tmp"
+								printf "%-40s%s\n" "${ip}" "# ${domain}" >>"./more_ipv6.tmp"
 							fi
 						fi
 					fi
@@ -129,9 +129,9 @@ while IFS= read -r domain; do
 			fi
 		fi
 		if [ "${domain_ok}" = "false" ]; then
-			printf "%s\n" "${domain}" >>./insta_domains_abandoned.tmp
+			printf "%s\n" "${domain}" >>./more_domains_abandoned.tmp
 		else
-			printf "%s\n" "${domain}" >>./insta_domains.tmp
+			printf "%s\n" "${domain}" >>./more_domains.tmp
 		fi
 	) &
 	hold1="$((cnt % 512))"
@@ -148,16 +148,16 @@ printf "%s\n" "::: Second run, duration: ${doh_duration}, processed domains: ${c
 
 # final sort/merge step
 #
-sort -b -u -n -t. -k1,1 -k2,2 -k3,3 -k4,4 "./insta_ipv4_cache.tmp" "./insta_ipv4.tmp" >"./output/insta_ipv4.txt"
-sort -b -u -k1,1 "./insta_ipv6_cache.tmp" "./insta_ipv6.tmp" >"./output/insta_ipv6.txt"
-sort -b -u "./insta_domains.tmp" >"./output/insta_domains.txt"
-sort -b -u "./insta_domains_abandoned.tmp" >"./output/insta_domains_abandoned.txt"
-cnt_cache_tmpv4="$("${awk_tool}" 'END{printf "%d",NR}' "./insta_ipv4_cache.tmp" 2>/dev/null)"
-cnt_cache_tmpv6="$("${awk_tool}" 'END{printf "%d",NR}' "./insta_ipv6_cache.tmp" 2>/dev/null)"
-cnt_tmpv4="$("${awk_tool}" 'END{printf "%d",NR}' "./insta_ipv4.tmp" 2>/dev/null)"
-cnt_tmpv6="$("${awk_tool}" 'END{printf "%d",NR}' "./insta_ipv6.tmp" 2>/dev/null)"
-cnt_ipv4="$("${awk_tool}" 'END{printf "%d",NR}' "./output/insta_ipv4.txt" 2>/dev/null)"
-cnt_ipv6="$("${awk_tool}" 'END{printf "%d",NR}' "./output/insta_ipv6.txt" 2>/dev/null)"
+sort -b -u -n -t. -k1,1 -k2,2 -k3,3 -k4,4 "./more_ipv4_cache.tmp" "./more_ipv4.tmp" >"./output/more_ipv4.txt"
+sort -b -u -k1,1 "./more_ipv6_cache.tmp" "./more_ipv6.tmp" >"./output/more_ipv6.txt"
+sort -b -u "./more_domains.tmp" >"./output/more_domains.txt"
+sort -b -u "./more_domains_abandoned.tmp" >"./output/more_domains_abandoned.txt"
+cnt_cache_tmpv4="$("${awk_tool}" 'END{printf "%d",NR}' "./more_ipv4_cache.tmp" 2>/dev/null)"
+cnt_cache_tmpv6="$("${awk_tool}" 'END{printf "%d",NR}' "./more_ipv6_cache.tmp" 2>/dev/null)"
+cnt_tmpv4="$("${awk_tool}" 'END{printf "%d",NR}' "./more_ipv4.tmp" 2>/dev/null)"
+cnt_tmpv6="$("${awk_tool}" 'END{printf "%d",NR}' "./more_ipv6.tmp" 2>/dev/null)"
+cnt_ipv4="$("${awk_tool}" 'END{printf "%d",NR}' "./output/more_ipv4.txt" 2>/dev/null)"
+cnt_ipv6="$("${awk_tool}" 'END{printf "%d",NR}' "./output/more_ipv6.txt" 2>/dev/null)"
 doh_end="$(date "+%s")"
 doh_duration="$(((doh_end - doh_start1) / 60))m $(((doh_end - doh_start1) % 60))s"
 printf "%s\n" "::: Finished DOH-processing, duration: ${doh_duration}, cachev4/cachev6: ${cnt_cache_tmpv4}/${cnt_cache_tmpv6}, all/unique IPv4: ${cnt_tmpv4}/${cnt_ipv4}, all/unique IPv6: ${cnt_tmpv6}/${cnt_ipv6}"
