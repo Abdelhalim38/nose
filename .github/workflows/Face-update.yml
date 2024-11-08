@@ -39,4 +39,4 @@ jobs:
           # Commit message
           commit_message: automatic/regular ip address updates
           # File pattern used for `git add`. For example `src/*.js`
-          file_pattern: ./Face_ipv*.txt ./Face_domains.txt ./Face_domains_abandoned.txt
+          file_pattern: ./output/Face_ipv*.txt ./output/Face_domains.txt ./output/Face_domains_abandoned.txt
